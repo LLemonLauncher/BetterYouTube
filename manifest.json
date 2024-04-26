@@ -1,0 +1,34 @@
+{
+
+    "manifest_version":2,
+    "name":"BetterYouTube",
+    "version":"1.0",
+
+    "description" : "A Firefox extension designed to filter unwanted content from YouTube",
+
+    "icons":{
+        "48": "Icons/BetterYouTubeIcon48.png",
+        "64": "Icons/BetterYouTubeIcon64.png"
+    },
+
+    "content_scripts":[
+        {
+            "matches":["*://*.youtube.com/*"],
+            "js": ["background.js"]
+        }
+    ],
+
+    "permissions": ["tabs", "contextMenus","webRequest", "browser_action", "*://*.youtube.com/*", "*://*.youtube.com/*/*"],
+
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+
+    "browser_specific_settings": {
+        "gecko": {
+          "id": "BetterYouTube@69364854-401d-40ca-a6c1-3d3fe903884b",
+          "strict_min_version": "55.0"
+        }
+      }
+}
