@@ -12,7 +12,7 @@
   
 window.addEventListener('DOMContentLoaded', function() {
   
-
+  //searchBlockTerms();
   var storedList = localStorage.getItem('blockList');
   if (storedList) {
     list = JSON.parse(storedList);
@@ -100,9 +100,13 @@ function searchBlockTerms() {
 
   console.log("searchBlockTerms is being executed");
 
-    const videoTitles = [...document.querySelectorAll('yt-formatted-string.ytd-rich-grid-media')].map(x => x.innerText);
+    //const videoTitles = document.querySelectorAll('.ry-badge ry-badge-dark');
+
+    const videoTitles = [...document.querySelectorAll('yt-formatted-string.style-scope ytd-rich-grid-media')].map(x => x.innerText);
 
     //const videoTitles = document.getElementById('video-title');
+
+    //const videoTitles = document.querySelectorAll('yt-logo-updated-svg_yt2');
     console.log(videoTitles);
   
     videoTitles.forEach(titleElement => {

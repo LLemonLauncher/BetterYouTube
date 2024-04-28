@@ -1,6 +1,6 @@
 {
 
-    "manifest_version":2,
+    "manifest_version":3,
     "name":"BetterYouTube",
     "version":"1.0",
 
@@ -13,12 +13,16 @@
 
     "content_scripts":[
         {
-            "matches":["*://*.youtube.com/*"],
+            "matches":["https://www.youtube.com/*", "https://www.rebuy.de/verkaufen/suche?query=978-3-507-86264-7"],
             "js": ["background.js"]
         }
     ],
 
-    "permissions": ["tabs", "contextMenus","webRequest", "browser_action", "*://*.youtube.com/*", "*://*.youtube.com/*/*"],
+    "permissions": ["tabs", "contextMenus","webRequest", "browser_action", "activeTab", "https://www.youtube.com/*", "https://www.youtube.com/*/*", "https://www.rebuy.de/verkaufen/suche?query=978-3-507-86264-7"],
+
+    "host_permissions":[
+        "https://www.youtube.com/*"
+    ],
 
     "background": {
         "scripts": ["background.js"],
