@@ -1,5 +1,4 @@
  console.log("Roflkopter");
-//import * as content_scripts from "./content_scripts.js";
 
  
  if (localStorage.getItem('blockList') == null && localStorage.getItem('windowOpen') == null) {
@@ -9,10 +8,18 @@
     console.log("Local storage created");
  }
  
+ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+  if (request.message === "lol") {
+    console.log("Roflkopüter");
+    sendResponse(localStorage.getItem('blockList') );
+  }
+
+ })
+ 
   
 window.addEventListener('DOMContentLoaded', function() {
   
-  //searchBlockTerms();
   var storedList = localStorage.getItem('blockList');
   if (storedList) {
     list = JSON.parse(storedList);
@@ -92,44 +99,10 @@ submitButton.addEventListener("click", function() {
     }
   });
   showList();
-  searchBlockTerms();
-  
+ 
 })
 
-function searchBlockTerms() {
-
-  console.log("searchBlockTerms is being executed");
-
-    //const videoTitles = document.querySelectorAll('.ry-badge ry-badge-dark');
-
-    const videoTitles = [...document.querySelectorAll('yt-formatted-string.style-scope ytd-rich-grid-media')].map(x => x.innerText);
-
-    //const videoTitles = document.getElementById('video-title');
-
-    //const videoTitles = document.querySelectorAll('yt-logo-updated-svg_yt2');
-    console.log(videoTitles);
-  
-    videoTitles.forEach(titleElement => {
-      const titleText = titleElement.textContent.toLowerCase(); // Get the lowercase text content of the title
-      const foundWords = list.filter(word => titleText.includes(word.toLowerCase()));
-    
-      if (foundWords.length > 0) {
-        console.log(`Title: ${titleText}`);
-        console.log(`Found words: ${foundWords.join(", ")}`);
-      } else {
-        console.log("No words found, sadge :(");
-      }
-    });
-  }
 
 
-
-
-
-
-
-
-
-  
 
   
