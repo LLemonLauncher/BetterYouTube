@@ -1,6 +1,4 @@
 
-
-
 function searchBlockTerms() {
 
   console.log("searchBlockTerms is being executed");
