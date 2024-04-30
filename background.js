@@ -56,8 +56,8 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 });
 
 
-function showList() {	
-  
+function showList() {
+
   list.sort();
   checkboxContainer.innerHTML = "";
 
@@ -68,11 +68,11 @@ function showList() {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = `checkbox${index}`;
-    
+
     const label = document.createElement("label");
     label.htmlFor = `checkbox${index}`;
     label.appendChild(document.createTextNode(element));
-    
+
     checkboxContainer.appendChild(checkbox);
     checkboxContainer.appendChild(label);
     checkboxContainer.appendChild(document.createElement("br"));
@@ -85,7 +85,7 @@ const checkboxContainer = document.getElementById("checkbox-container");
 
 submitButton.addEventListener("click", function() {
 
-  if(userInput.value !== "" && list.indexOf(userInput.value) === -1){
+  if (userInput.value !== "" && list.indexOf(userInput.value) === -1) {
     list.push(userInput.value.trim().toLowerCase());
     showList();
     return;
@@ -93,8 +93,8 @@ submitButton.addEventListener("click", function() {
 
   let checkboxes = checkboxContainer.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
-    if(checkbox.checked){
-      console.log("Checkbox checked: "+"checkbox.value");
+    if (checkbox.checked) {
+      console.log("Checkbox checked: " + "checkbox.value");
       list.splice(list.indexOf(checkbox.nextElementSibling.textContent), 1)
     }
   });
@@ -105,4 +105,4 @@ submitButton.addEventListener("click", function() {
 
 
 
-  
+

@@ -1,6 +1,7 @@
 {
 
     "manifest_version":2,
+    "manifest_version":2,
     "name":"BetterYouTube",
     "version":"1.0",
 
@@ -19,6 +20,7 @@
     ],
 
     "permissions": ["tabs", "contextMenus","webRequest", "browser_action", "activeTab"],
+    "permissions": ["tabs", "contextMenus","webRequest", "browser_action", "activeTab"],
 
     "background": {
         "scripts": ["background.js"],
@@ -27,8 +29,8 @@
 
     "browser_specific_settings": {
         "gecko": {
-          "id": "BetterYouTube@69364854-401d-40ca-a6c1-3d3fe903884b",
-          "strict_min_version": "55.0"
+            "id": "BetterYouTube@69364854-401d-40ca-a6c1-3d3fe903884b",
+            "strict_min_version": "55.0"
         }
-      }
+    }
 }
