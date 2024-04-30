@@ -1,25 +1,24 @@
- console.log("Roflkopter");
+console.log("Roflkopter");
 
- 
- if (localStorage.getItem('blockList') == null && localStorage.getItem('windowOpen') == null) {
-    let list = new Array();
-    localStorage.setItem('blockList', JSON.stringify(list));
-    localStorage.setItem('windowOpen', false);
-    console.log("Local storage created");
- }
- 
- browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+if (localStorage.getItem('blockList') == null) {
+  let list = new Array();
+  localStorage.setItem('blockList', JSON.stringify(list));
+  console.log("Local storage created");
+}
+
+browser.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
 
   if (request.message === "lol") {
     console.log("Roflkopüter");
-    sendResponse(localStorage.getItem('blockList') );
+    sendResponse(localStorage.getItem('blockList'));
   }
 
- })
- 
-  
+})
+
+
 window.addEventListener('DOMContentLoaded', function() {
-  
+
   var storedList = localStorage.getItem('blockList');
   if (storedList) {
     list = JSON.parse(storedList);
@@ -29,7 +28,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
 window.addEventListener('beforeunload', function() {
   localStorage.setItem('blockList', JSON.stringify(list));
-  localStorage.setItem('windowOpen', false);
 });
 
 browser.contextMenus.create({
@@ -39,19 +37,21 @@ browser.contextMenus.create({
 });
 
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener((info, _tab) => {
 
-  let windowOpen = JSON.parse(localStorage.getItem('windowOpen'));
-
-  if (info.menuItemId === "blocky" && !windowOpen) {
+  if (info.menuItemId === "blocky") {
     console.log("2Roflkopüter");
-    localStorage.setItem('windowOpen', true);
-    browser.windows.create({
-      url: "block.html",
-      type: "popup",
-      width: 600,
-      height: 400,
-    })
+    browser.windows.getAll().then((windows) => {
+      let terminals = windows.filter((item) => item.title.includes("(BetterYouTube) - Block Terminal"));
+      if (terminals.length != 0)
+        return;
+      browser.windows.create({
+        url: "block.html",
+        type: "popup",
+        width: 600,
+        height: 400,
+      })
+    });
   }
 });
 
@@ -99,7 +99,7 @@ submitButton.addEventListener("click", function() {
     }
   });
   showList();
- 
+
 })
 
 
