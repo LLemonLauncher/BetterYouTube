@@ -1,6 +1,3 @@
-console.log("Roflkopter");
-
-
 if (localStorage.getItem('blockList') == null) {
   let list = new Array();
   localStorage.setItem('blockList', JSON.stringify(list));
@@ -15,7 +12,6 @@ browser.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
   }
 
 })
-
 
 window.addEventListener('DOMContentLoaded', function() {
 
@@ -36,11 +32,9 @@ browser.contextMenus.create({
   contexts: ["all"] // Contexts where the menu item will appear
 });
 
-
 browser.contextMenus.onClicked.addListener((info, _tab) => {
 
   if (info.menuItemId === "blocky") {
-    console.log("2Roflkopüter");
     browser.windows.getAll().then((windows) => {
       let terminals = windows.filter((item) => item.title.includes("(BetterYouTube) - Block Terminal"));
       if (terminals.length != 0)
@@ -55,10 +49,10 @@ browser.contextMenus.onClicked.addListener((info, _tab) => {
   }
 });
 
-
 function showList() {
 
   list.sort();
+  localStorage.setItem('blockList', JSON.stringify(list));
   checkboxContainer.innerHTML = "";
 
   list.forEach((element, index) => {
