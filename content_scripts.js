@@ -32,7 +32,7 @@ function searchBlockTerms() {
     
             setTimeout(() => {
               let video = document.querySelectorAll(video_selector);
-              console.log(video);
+              //console.log(video);
               video[index].children[0].click();
     
               //console.log("selected video menu");
