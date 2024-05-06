@@ -1,17 +1,42 @@
-if (localStorage.getItem('blockList') == null) {
+if (localStorage.getItem('blockList') == null || localStorage.getItem('tempList') == null) {
   let list = new Array();
   localStorage.setItem('blockList', JSON.stringify(list));
+  let tempList = new Array();
+  localStorage.setItem('tempList', JSON.stringify(tempList));
   console.log("Local storage created");
 }
+
 
 browser.runtime.onMessage.addListener(function(request, _sender, sendResponse) {
 
   if (request.message === "lol") {
-    console.log("Roflkopüter");
     sendResponse(localStorage.getItem('blockList'));
   }
+  
+  if (request.message === "need indexes pls") {
+    
+    //checks if video with index has already been blocked
+    let temp = JSON.parse(localStorage.getItem('tempList'));
+    if (temp.indexOf(request.data) == -1) {
+      temp.push(request.data);
+      sendResponse(true);
+      localStorage.setItem('tempList', JSON.stringify(temp));
+    } else{
+      sendResponse(false);
+    }
+    console.log("tempList " + localStorage.getItem('tempList'));
+  }
 
+  if (request.message === "clear indexes") {
+    let temp = JSON.parse(localStorage.getItem('tempList'));
+    temp.splice(0, temp.length);
+    localStorage.setItem('tempList', JSON.stringify(temp));
+    console.log("cleared indexes");
+  }
+  
+  
 })
+
 
 window.addEventListener('DOMContentLoaded', function() {
 
@@ -88,13 +113,24 @@ submitButton.addEventListener("click", function() {
   let checkboxes = checkboxContainer.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
-      console.log("Checkbox checked: " + "checkbox.value");
       list.splice(list.indexOf(checkbox.nextElementSibling.textContent), 1)
     }
   });
   showList();
 
 })
+
+
+const indexButton = document.getElementById("index");
+
+indexButton.addEventListener("click", function() {
+  let temp = JSON.parse(localStorage.getItem('tempList'));
+  temp.splice(0, temp.length);
+  localStorage.setItem('tempList', JSON.stringify(temp));
+  console.log("cleared indexes");
+});
+
+
 
 
 

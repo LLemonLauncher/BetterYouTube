@@ -1,18 +1,18 @@
 function searchBlockTerms() {
 
-  //console.log("searchBlockTerms is being executed");
+  console.log("searchBlockTerms is being executed");
 
   const videoTitles = [...document.querySelectorAll('#video-title.style-scope.ytd-rich-grid-media')].map(x => x.innerText);
-  console.log(videoTitles);
+  //console.log(videoTitles);
 
   browser.runtime.sendMessage({
     message: "lol"
   }).then((message) => {
-    let timer_index = 1;
-    videoTitles.forEach((titleElement, index) => {
+      let timer_index = 1;
+      videoTitles.forEach((titleElement, index) => {
       const titleText = titleElement.toLowerCase();
 
-      console.log(message);
+      //console.log(message);
       const list = message ? JSON.parse(message) : [];
 
       const foundWords = list.filter(word => titleText.includes(word.toLowerCase()));
@@ -20,33 +20,47 @@ function searchBlockTerms() {
       const menubutton_selector = "tp-yt-paper-item.style-scope.ytd-menu-service-item-renderer";
 
       if (foundWords.length > 0) {
-        console.log(`Title: ${titleText}`);
-        console.log(`Found words: ${foundWords.join(", ")}`);
-        //console.log(`Index: ${index} => Index / 2: ${index / 2}`);
-
-        setTimeout(() => {
-          let video = document.querySelectorAll(video_selector);
-          console.log(video);
-          video[index].children[0].click();
-
-          //console.log("selected video menu");
-          setTimeout(() => {
-            document.querySelectorAll(menubutton_selector)[4].click();
-            console.log("removed video");
-          }, 400);
-        }, 500 * (timer_index++));
+        browser.runtime.sendMessage({
+          message: "need indexes pls",
+          data: index
+        }).then((response) => {
+          //console.log("response " + response);
+          //response is boolean. Checks if video with given index has already been blocked to avoid double blocking
+          if(response){
+            console.log(`Title: ${titleText}`);
+            console.log(`Found words: ${foundWords.join(", ")}`);
+    
+            setTimeout(() => {
+              let video = document.querySelectorAll(video_selector);
+              console.log(video);
+              video[index].children[0].click();
+    
+              //console.log("selected video menu");
+              setTimeout(() => {
+                document.querySelectorAll(menubutton_selector)[4].click();
+    
+                console.log("removed video");
+              }, 400);
+            }, 500 * (timer_index++));
+          }
+        });
       }
     });
   });
 }
 
-while (true) {
-  setTimeout(function() {
-    //console.log("searchBlockTerms is being executed blankkkk");
-    searchBlockTerms();
-  }, 1000);
-}
 
+setInterval(() => {
+  searchBlockTerms();
+}, 5000);
+
+
+window.addEventListener('beforeunload', function() {
+  browser.runtime.sendMessage({
+    message: "clear indexes"
+  })
+  }
+)
 
 
 
